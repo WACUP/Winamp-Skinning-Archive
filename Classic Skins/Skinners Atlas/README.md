@@ -82,7 +82,7 @@ It may seem obvious, but I give you permission to extract the files included and
   
 There's nothing really special with this file, it is the background of the main winamp window, you can paint whatever you want here. The boxes are drawn only as a guide to let you know where each component is going to be.  
   
-## The visible/invisible areas
+### The visible/invisible areas
   
 Most of the areas will be covered by the actual components found in other files, so whatever you paint here won't ever be seen in winamp. These are the only component areas that will show in main.bmp:  
   
@@ -95,7 +95,7 @@ Most of the areas will be covered by the actual components found in other files,
   
 You can fill all the other component areas with a plain colour, this will reduce the size of the final zip or wsz file.  
   
-## Song title
+### Song title
   
 You'll notice two boxes in the song-title area (actually, you'll notice one box and two darker strips). The smallest and lighter one is the box occupied when you use bitmap font; if you uncheck the "Use bitmap font for main title display (no int. support)" option in the preferences dialogue, then the bigger and darker box will be used. Be sure to check this when you are testing your skin.  
   
@@ -104,21 +104,21 @@ You'll notice two boxes in the song-title area (actually, you'll notice one box 
   
 In the middle zone of this file you'll find 6 'titlebars' or long gray strips, from top to bottom they are: active normal, inactive normal, active winshade, inactive winshade, active easter-egg, inactive easter-egg. The app-buttons (those little blue squares) drawn inside the bars will be shown only until you click on them (I'll explain it in a moment).  
   
-## Titlebars
+### Titlebars
   
 The active/inactive versions are used when the main window is selected/unselected respectively. The normal titlebars are, as you could guess, the normal ones while the easter-egg versions are used when the winamp's easter-egg is activated (you can activate it by typing N-U-L-\[esc\]-L-\[esc\]-S-O-F-T while the main window is selected).  
   
-## Winshade
+### Winshade
   
 The winshade mode is the bar that will be shown when the main window is shrunk to winshade, and here we find an important bug in winamp: The line of lighter pixels between the active and inactive winshades is shared! That means it will appear at the bottom of the active one and at the top of the inactive one, don't forget it or your skin will have a bug too. The winshade bars have a full set of control buttons without pressed states, a mini posbar (to their right) that will be shown when no file is playing, two boxes for the time display (to their left) and a mini vis (further to the left), which behaves just like the one in main.bmp.  
   
-## App-buttons & posbar
+### App-buttons & posbar
   
 In the top left zone of this file there's a set of app-buttons. The top row are (left to right) the winamp or main menu button, the minimize button and the close button in their unpressed (released, up..) states. Right under them are the same buttons in their pressed (depressed, pushed, down...) states. Then (3rd row) we have the winshade button in its pressed and unpressed states (left to right) and, under them, the 'return-to-normal' button in, again, both states. This last button is the one shown in the winshade mode, that permits us to return to the normal mode. While you don't click a button, the version painted inside the titlebars is used; when you click it, the pressed version in the left part will appear and, if you move the mouse without releasing the button, the unpressed version in the left will show; from now on, only the pressed and unpressed versions of the button will be seen and the titlebar version will be forgotten... until the titlebar changes (because you activate the easter-egg, select a different window, change to winshade mode...). Note too that the 'outside' buttons are the same for normal and winshade mode, so if you paint them too differently in the titlebars they could look strange when clicked.  
   
 Right under these buttons is the mini posbar, this is the version that will be shown in the winshade mode when a file is playing. To its right there are three narrow sliders, they will all be used for the posbar slider in winshade mode. The posbar is divided in three colour zones, marking where each slider will be used: the left one will be used when the center of the slider is inside the left colour zone, the center one when it's inside the middle colour zone and the right one when it's inside the right colour zone.  
   
-## Clutterbar
+### Clutterbar
   
 The right part of the file is taken by the clutterbar. The top row contains the clutterbar in its unpressed state (left) and when it's deactivated (right). You can deactivate/activate the clutterbar by unchecking/checking the "Always show Clutterbar" option in the preferences dialogue, this will alternate between the two aforementioned forms. The blue boxes in the left clutterbar mark the active areas, where you can click the mouse and activate the buttons.  
   
@@ -130,11 +130,11 @@ No tricks in this file. These are the main control buttons. Just note that the '
   
 ## SHUFREP.BMP (92×85)
   
-## Shuffle & Repeat
+### Shuffle & Repeat
   
 The top part contains the shuffle and repeat buttons in their active/inactive, pressed/unpressed states. Top to bottom: inactive unpressed, inactive pressed, active unpressed, active pressed. The repeat button is left, the shuffle button is right (note this is the opposite from the final layout of these buttons). Another thing to note is that the line between the two buttons (in the file it's the far left and far right line cyan line) is shared. It will normally show the pixels from the unpressed shuffle or repeat button (the last one clicked), but when you click one of the buttons it changes, it changes when you click the repeat button, and it changes when you click the shuffle button. So, the best way to fix this is to assume the shuffle button (for example) is one pixel narrower and just copy the left border of the unpressed repeat button (you better make this line the same in both active/inactive versions) into this conflictive line of the shuffle button, now reduce the shuffle button's width and you're done.  
   
-## Eq & Pl
+### Eq & Pl
   
 In the bottom part you'll find another set of 8 buttons, this time the 'eq' and 'pl' buttons. They are now in the same layout they will be used ('eq' to the right, 'pl' to the left), so there are 4 pairs of buttons, each pair is one state. Again, left to right, top to bottom: inactive unpressed, inactive pressed, active unpressed, active pressed. In short: top row inactive, bottom row active, left half unpressed, right half pressed.  
   
@@ -197,19 +197,19 @@ This text file contains all the colours that will be shown in the visualization 
   
 This file contains the main part of the equalizer window. The top part is the background and, as it happened with main.bmp, it will be mostly covered by other components, in fact, only the light gray areas and the +12/0/-12 zones will be shown in winamp, the rest can be painted with a plain colour to reduce the final size.  
   
-## Titlebar
+### Titlebar
   
 This window has a titlebar and app-buttons too, and they are defined just like they were in titlebar.bmp. The long gray strips are the titlebar in active (top) and inactive (bottom) state. The close button inside the titlebars will be shown until you click on it, its pressed and unpressed states of the close button are painted between the background and the active titlebar, far left (unpressed is at top, pressed is at bottom). The winshade button is different, the pressed state is always the one shown in the painted in the titlebar, the unpressed state is defined in eq\_ex.bmp (see later), if there is no eq\_ex.bmp then it doesn't change when clicked.  
   
-## Buttons
+### Buttons
   
 To the right of the close button we have the 'on' and 'auto' buttons, like in shuffrep.bmp these buttons have both active and inactive states (and pressed and unpressed). They come in pairs on/auto, left to right: inactive unpressed, active unpressed, inactive pressed, active pressed. In the right part under the inactive titlebar we have the 'presets' button in its unpressed (top) and pressed (bottom) states.  
   
-## Eq-sliders
+### Eq-sliders
   
 To the left of the presets button we see the beloved eq-sliders, again 28 bars with position markers that give us the opportunity to change the gain of different frequencies... that's an equalizer. Note that the same bars will be used for each of the 11 eq-sliders (10 freq, 1 preamp), so you can't have a decent background under them. As it happened with the volume, the position markers are two pixels shorter than the actual slider, you should add one pixel to the top and one pixel to the bottom of the markers to make them same size. To the left of the bars are the unpressed (top) and pressed (bottom) states of the slider, which again is the same for all 11 eq-sliders. Unfortunately, you can't crop the slider leaving the bars, so the scope of possible animations for these controls is considerably limited.  
   
-## Eq-vis
+### Eq-vis
   
 Finally, the bottom part is taken by the eq-vis, this is some kind of display that will show a curve mirroring the eq setting. The big box is the window, the line below it will show the master gain, the line to its right is a scale of colours: the lowest part of the curve will have the colour of the bottom pixels, the highest part of the curve will have the colour of the top pixels. If you don't like these lines, you can crop the file to eliminate either the bottom line or the whole eq-vis. You may want to crop the eq bars too, but this will eliminate the slider and the presets button as well, and the equalizer will be almost unusable.  
   
@@ -221,13 +221,13 @@ Here is where the winshade mode is defined for the equalizer. The top strip is t
   
 This file contains everything needed for the playlist window, everything except the colours and font of the playlist text. The first thing you should remember about this window is that it is tiled, i.e. because the window may be resized the borders are actually made of repeated tiles, so you'd better take care so no discontinuities appear.  
   
-## Titlebar
+### Titlebar
   
 The top border of the playlist window is taken by the titlebar, which can be found in the top left part of pledit.bmp. The first row is for the active titlebar, the second for the inactive titlebar. Each row is composed of (left to right): left corner, central section, tile, right corner. The central section will always be placed in centre of the titlebar and a number of copies of the 'tile' will be placed between each corner and the central section. If the total number of tiles is going to be odd, because the central section has to remain in the centre, a half-tile is used at both sides. To keep things weird, the width of the tile is odd, so it can't be divided in two equal halves, 12 pixels of the tile (the dark part) will be used to the right of the left corner and 13 pixels of the tile (the dark part and an additional light line) will be used to the right of the central part. This makes it even harder to design a good-looking playlist titlebar.  
   
 The known app-buttons are present in the right corner of the titlebar: close and winshade, these buttons are the unpressed states, the pressed states are found right under the inactive central part, it's not hard to find them. There is another bug here, the winshade button is displaced one pixel to the right with respect to the other windows (there's no gap between winshade and close buttons). You can still draw the button in the usual position, but keep in mind that the area that will change is a bit different.  
   
-## Side and bottom borders
+### Side and bottom borders
   
 The sides of the playlist are entirely (except the corners) made of tiles, and the tiles are found in the third row of this file, first the left tile, then the right tile. Marked in light grey is the zone that won't be shown due to it being covered by the playlist text. The right tile contains a blue column - this is the vertical scroll bar. To the right of this right tile, and under the pressed app-buttons you'll find the unpressed and pressed states of the vertical scroll slider.  
   
@@ -235,11 +235,11 @@ In the fourth row we have the left and right bottom corners of the playlist wind
   
 In the top row, far right we find two additional tiles, the smaller one is the bottom tile. When the playlist window is big enough, the wider tile will be used, but only once, between the right corner and the bottom tile(s) (or left corner if there is no room for more bottom tiles). In this additional tile there is a blue box which is an additional vis, but it will show nothing unless the vis is active and the main window is hidden, to do this you have to press ALT+W and click inside this box if nothing appears here.  
   
-## The stacks
+### The stacks
   
 The most important part of the playlist, apart from the actual list, are the stacks. There are five stacks, located in the left and right bottom corners of the playlist, when you click one of the buttons the associated stack appears as a... stack of buttons. These stacked buttons are defined in the bottom part of pledit.bmp. For each stack we have (left to right): the unpressed buttons, the pressed buttons and the side bar. The stacks are located in the same horizontal order they appear: add, remove, select, miscellaneous, list (left to right). The vertical layout of each stack is also the same that will be used in winamp, except for the second (remove) stack, for which the bottom button will be shown on top of the others. The side bars will be shown to the left of each stack and they have no pressed state. The buttons are (top to bottom, left to right): add url, add directory/folder, add file, remove all, crop (remove unselected), remove selected, remove other, invert selection, select none, select all, sort, file info, other, new list, save list, load list. Each with its unpressed and pressed states. The buttons or parts of buttons or bars that will appear over the play list text are slightly grayed.  
   
-## Winshade
+### Winshade
   
 The playlist has a winshade mode too, it is defined to the right of the pressed app-buttons and vertical scroll slider. The top row contains the left corner and the active right corner, the bottom row contains the tile and the inactive right corner. The right corner works like a titlebar, changing to active/inactive when the playlist is selected/unselected, the tile is repeated as many times as needed to fill all the length. The blue box that spans all three sections is where the current song will appear. The right corner has a horizontal resize button (active area) and unpressed close and 'back to normal' buttons, the pressed close button is the same as in normal mode, the pressed 'back to normal' button is found to the right of the active right corner. The 'back to normal' button has the same bug the winshade button has: it's one pixel to the right.  
   
@@ -374,6 +374,7 @@ When testing your VidAmp skin on Winamp, remember that in order for it to load, 
 You can get the VidAmp plugin [HERE](http://classic.winamp.com/plugins/detail.jhtml?componentId=22629)(112kb)  
   
 ## CURSORS
+
 Winamp lets you define custom cursors, which will be used by winamp and only by winamp (when the mouse is over any of winamp's windows, except the minibrowser and avs). If you don't want to make custom cursors, don't include any, winamp will use the default ones. These are the different cursors and where should the mouse be for them to be shown:  
   
 - `normal.cur`: Main window except titlebar, song title, volume, balance and posbar.  
