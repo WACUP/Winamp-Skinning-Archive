@@ -102,7 +102,6 @@ You can fill all the other component areas with a plain colour, this will reduce
 **Song title**  
   
 You'll notice two boxes in the song-title area (actually, you'll notice one box and two darker strips). The smallest and lighter one is the box occupied when you use bitmap font; if you uncheck the "Use bitmap font for main title display (no int. support)" option in the preferences dialogue, then the bigger and darker box will be used. Be sure to check this when you are testing your skin.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
   
 **TITLEBAR.BMP (344×87)**  
@@ -128,12 +127,10 @@ Right under these buttons is the mini posbar, this is the version that will be s
 The right part of the file is taken by the clutterbar. The top row contains the clutterbar in its unpressed state (left) and when it's deactivated (right). You can deactivate/activate the clutterbar by unchecking/checking the "Always show Clutterbar" option in the preferences dialogue, this will alternate between the two aforementioned forms. The blue boxes in the left clutterbar mark the active areas, where you can click the mouse and activate the buttons.  
   
 The bottom row contains the pressed states of each of the five buttons of the clutterbar, the boxes are an attempt to show the areas that change when you click on them. In fact, when you click each of the buttons the whole corresponding column is shown, except the 'A' and 'D' areas. In these areas, the blue area will be shown if the button is activated ('always on top' or 'doublesize') - but if deactivated, the corresponding areas of the top-left clutterbar will be shown. It's not easy to explain, you'd better go and try it.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **CBUTTONS.BMP (136×36)**  
   
 No tricks in this file. These are the main control buttons. Just note that the 'next' ( >| ) and 'load ( ^ ) buttons are one pixel narrower (left to right) and the 'load' button is two pixels shorter (top to bottom) than the rest. The top row is the unpressed state, the bottom row is the pressed state.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **SHUFREP.BMP (92×85)**  
   
@@ -144,24 +141,20 @@ The top part contains the shuffle and repeat buttons in their active/inactive, p
 **Eq & Pl**  
   
 In the bottom part you'll find another set of 8 buttons, this time the 'eq' and 'pl' buttons. They are now in the same layout they will be used ('eq' to the right, 'pl' to the left), so there are 4 pairs of buttons, each pair is one state. Again, left to right, top to bottom: inactive unpressed, inactive pressed, active unpressed, active pressed. In short: top row inactive, bottom row active, left half unpressed, right half pressed.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **POSBAR.BMP (307×10)**  
   
 This file contains the posbar that will be shown when there's a file playing, along with the slider in both unpressed and pressed states (in this order, left to right). Note that there is a one pixel line between both states of the slider, but no gap between the posbar and the unpressed slider. You can crop this file (ie. make it less than 10 pixels tall) to get a thinner posbar and slider.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **MONOSTER.BMP (56×24)**  
   
 Similarly to shufrep.bmp, the stereo and mono indicators are inverted from their positions in the main window, here stereo is to the left and mono to the right, in the main window (and final winamp) it's the other way round. The top row shows both indicators in their active state, the bottom row shows them in their inactive state. You'll only see one of them active at the same time, and both inactive in no file is playing.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **PLAYPAUS.BMP (42×9)**  
   
 This is one of the most obscure and confusing files in winamp's skin. It is shown to the left of the big numbers in the main window. It tells whether winamp is playing, paused, or stopped (light squares) and whether a file is loaded or buffering (dark columns). From left to right: playing, paused, stopped, none, blank, loaded, buffering.  
   
 When there's no file playing (stopped), the 'none' column will be shown, which is only 2 pixels wide. When a file is loaded or buffering, the appropriate 3-pixel column will show, and it'll overlap the 'play' or 'pause' indicator. I drew a dark line next to every light square, this will complete the dark column when no file is playing and will be covered otherwise, each frame goes with the line to its left. The blank part is never shown, I believe.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **NUMS_EX.BMP (108×13)  
 NUMBERS.BMP (99×13)**  
@@ -171,7 +164,6 @@ Two similar files, you only need to include one of them, it is recommended to in
 The structure of this file is quite straightforward, from left to right: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, (blank), -. The blank will be used instead of the minus when the display is set to "Time elapsed".  
   
 There's a bug when nums_ex.bmp is used, but there's not much you can do about it. When you pause a playing file, the numbers blink and the leftmost character makes funny things, in fact it takes two more pixels to its right and this is not reset until you stop the file, or a new file starts playing...  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **TEXT.BMP (155×18)**  
   
@@ -187,14 +179,12 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z " @
 Å Ö Ä ? *  
   
 Between '9' and '.' there's a character that looks like three dots but it's not used for the ALT+0133 character. As I've said, the 'space' is the rightmost character in the top row.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **VOLUME.BMP (68×433)**  
   
 This file defines the volume slider and bar. First, you'll see 28 strips, these are the bars shown when the volume is set to minimum (top), maximum (bottom) and, strangely enough, all the intermediate states in the middle. Inside these bars you see dark squares; these mark the position the slider is in each of the states (the first bar is used when the slider is to the left, as the slider moves to the right different bars are shown); this means that you will never see these dark squares because they are always covered by the sliders. Note that, because winamp is not an exact science, there are more possible slider positions than bar states, i.e. you can move the slider one or two pixels without the bar changing, that's why the dark boxes are two pixels narrower than the actual slider. If you want them to be the same size, add one pixel to each side of the position markers, then you'll see how these dark pixels show behind the slider as you move it.  
   
 Under the 28 bars, there's the slider in its pressed and unpressed state (left to right). You can crop this file (make it less than 433 pixels tall) to reduce the vertical size of the slider or even to make it completely disappear. In this case the position markers are a guide of where is the slider supposed to be, even if you can't see it.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **BALANCE.BMP (47×433)**  
   
@@ -203,12 +193,10 @@ This file is very similar to volume.bmp, but it defines the balance slider and b
 To the left of each bar you'll see up to three red symbols which won't be shown in winamp, they are there just to mark which bars are visible. The bars marked with the square are the only ones shown when you use the balance in the main. The bars marked with the left arrow are shown when you adjust the balance to the left using the eq-winshade control. The bars marked with the right arrow are shown when moving the eq-winshade control to the right. The bars with no symbol are, as far as I know, never shown.  
   
 Again, the slider is underneath the bars in its pressed (left) and upressed (right) states.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **VISCOLOR.TXT**  
   
 This text file contains all the colours that will be shown in the visualization area when it is active (oscilloscope or analyzer). Each colour is defined by three decimal numbers (red, green and blue components) separated by a comma, everything between "//" and the end of a line is a comment, it won't be taken into account. Each component range between 0 (no colour, black) to 255 (full colour: red, green or blue), so 0,0,0 is black, 255,255,255 is white. The order of the colours is commented in the file: the fist two colours define the background and dots (check it to see what are the dots), the next 16 colours are the analyzer's colours from top to bottom, the next 5 colours are the oscilloscope's ones, from center to top/bottom, the last colour is for the analyzer's peak markers.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **EQMAIN.BMP (275×315)**  
   
@@ -229,12 +217,10 @@ To the left of the presets button we see the beloved eq-sliders, again 28 bars w
 **Eq-vis**  
   
 Finally, the bottom part is taken by the eq-vis, this is some kind of display that will show a curve mirroring the eq setting. The big box is the window, the line below it will show the master gain, the line to its right is a scale of colours: the lowest part of the curve will have the colour of the bottom pixels, the highest part of the curve will have the colour of the top pixels. If you don't like these lines, you can crop the file to eliminate either the bottom line or the whole eq-vis. You may want to crop the eq bars too, but this will eliminate the slider and the presets button as well, and the equalizer will be almost unusable.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **EQ_EX.BMP (275×56)**  
   
 Here is where the winshade mode is defined for the equalizer. The top strip is the active mode and the bottom strip is the inactive mode. The blue boxes are bars for volume (left) and balance (right). Under the winshades and to the left are the buttons. First (top row) we find the volume slider (left) and the balance slider (right). These mini sliders are similar to the posbar slider in titlebar.bmp: for each slider there are three forms, used when the slider is in the left part, middle part or right part of the bar, and, as with the winshade posbar, these bars are divided in three colour zones, marking where each slider will be used (the balance slider, however, may change without moving when it's at a zone's edge). The second row of buttons contain the pressed winshade button (this is the pressed state of the button present in eqmain.bmp) and the unpressed close button. The bottom row holds the pressed 'back to normal' button (right) and close button (left). As it happened with the winshade button in eq_main.bmp, there is no 'outside' version for the unpressed state of the 'back to normal' button, so the one in the gray bar will be always used.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **PLEDIT.BMP (280×186)**  
   
@@ -261,19 +247,16 @@ The most important part of the playlist, apart from the actual list, are the sta
 **Winshade**  
   
 The playlist has a winshade mode too, it is defined to the right of the pressed app-buttons and vertical scroll slider. The top row contains the left corner and the active right corner, the bottom row contains the tile and the inactive right corner. The right corner works like a titlebar, changing to active/inactive when the playlist is selected/unselected, the tile is repeated as many times as needed to fill all the length. The blue box that spans all three sections is where the current song will appear. The right corner has a horizontal resize button (active area) and unpressed close and 'back to normal' buttons, the pressed close button is the same as in normal mode, the pressed 'back to normal' button is found to the right of the active right corner. The 'back to normal' button has the same bug the winshade button has: it's one pixel to the right.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **PLEDIT.TXT**  
   
 This text file defines the colours used inside the play list and in the text box of the minibrowser, as well as the font. The colours are defined in html-format: they are hexadecimal numbers, the first two places are for the red component (00-FF) the next to places for the blue component (00-FF) and the last two places for the green component (00-FF), so #000000 is black, #FFFFFF is white, #00FF00 is blue, #808080 is gray... The colours can be defined in any order, but the names must be: 'Normal' for the normal text in the play list, 'Current' for the text of the currently playing song in the play list, 'NormalBG' for the normal background of the playlist, 'SelectedBG' for the background of the selected song in the playlist, 'mbFG' for the text in the minibrowser and 'mbBG' for the background in the minibrowser. The font is defined as 'Font', you can use whatever font you want, but it is recommended to use standard fonts, so that everyone can see it fine without having to install additional fonts. Some of these standard fonts are: Arial, Times New Roman, Verdana, Tahoma, Comic Sans MS, Calisto MT, Book Antiqua, Century Gothic... You should be able to find out which fonts are intalled by default with windows.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **MB.BMP (233×119)**  
   
 This file defines the minibrowser window, and it's very similar to pledit.bmp. The minibrowser is resizeable and tiled, just like the playlist window. The top two rows of mb.bmp are the titlebar, and it works just like the playlist's titlebar, except it has no winshade mode and no winshade button. The pressed close button is located right under the line between the inactive tile and inactive right corner. Under the titlebar we find the left bottom corner and under it the right bottom corner. The left corner contains the browser buttons in their unpressed states, the right corner has a resize button (active area). To the right of the right corner there is the bottom tile, which will be placed as many times as needed between the two bottom corners. All along the bottom border there is a blue box which will hold the current location text. To the right of the left corner you'll find the two side tiles, the left one to the left and the right one to the right, they work as the playlist's ones. To the right of the pressed closed button we have the pressed browser buttons, they are (left to right): previous location, next location, stop transfer, reload, other.  
   
 In Winamp 2.9 an ugly 2-pixel border was introduced around the inside of the minibrowser, don't try to remove it, you can't (as far as I know). Well, the border can give a good effect sometimes, but it destroys some skins that were made to look good without that border (see winampmb.txt, below).  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **AVS.BMP (97×188)**  
   
@@ -282,12 +265,10 @@ This file defines the avs window, the simplest window in winamp, it's only a bor
 In the top left corner of this file we find the pressed close button, or this is what it should be, I have never been able to make winamp show it, but there it is. To its right there are the top left corner, the top middle part and the top right corner (with the unpressed close button); right under them, their bottom counterparts. The middle sections will be the ones that will be horizontally stretched. The left part of the file is taken by the left and right borders, these will be vertically stretched.  
   
 This file is no longer used by any version of Winamp greater than WA2.9, it is however still supported in older versions, pre WA2.9, so it's probably a good idea to include it anyway.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **VIDEO.BMP (233×119)**  
   
 This file defines the Video window, and it's very similar to mb.bmp. The Video Window is resizeable and tiled, just like the playlist window. The top two rows of video.bmp are the titlebar, and it works just like the playlist's titlebar, except it has no winshade mode and no winshade button. The pressed close button is located right under the line between the inactive tile and inactive right corner. Under the titlebar we find the left bottom corner and under it the right bottom corner. The left corner contains the browser buttons in their unpressed states, the right corner has a resize button (active area). To the right of the right corner there is the bottom tile, which will be placed as many times as needed between the two bottom corners. All along the bottom border there is a blue box which will hold the current playing text. To the right of the left corner you'll find the two side tiles, the left one to the left and the right one to the right, they work as the playlist's ones. To the right of the pressed closed button we have the pressed video buttons, they are (left to right): Full screen, Regular size, Double Size, TV browser and load file.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **GEN.BMP (178(+)×103)**  
   
@@ -306,7 +287,6 @@ Directly under these side wall sections is the tile portion of the lower window,
 Below all of this is a a font for the titlebar, in both highlight and no-highlight modes. The font is variable width, but not variable height, and it uses the first color before the letter A as the delimiter. The no-highlight form of letter must be the same width as the highlight form. The order of the letters is the standard Latin/English alphabet (no foreign characters).  
   
 Since the width of the letters is not fixed the width of this file can vary depending on the font you choose. In this template, the font shown is the same of text.bmp.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **GENEX.BMP (112×59)**  
   
@@ -350,21 +330,18 @@ The very top row of genex.bmp features a row of pixels that are used to control 
 (20) x=86 List view background colour highlighted  
 (21) x=88 List view text colour selected  
 (22) x=90 List view background colour selected  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **MIKRO.BMP (65×124)**  
   
 This is the skin file for a plugin called MikroAMP, which is very popular and easy to skin. The file is structured as follows: The top left black square is what it is called a mask, this defines the shape of the large mikroamp window, in this box black is opaque and white is transparent, it is recommended that you use only pure black and pure white, but the fact is that only pure white will be transparent, all other colours will be opaque. The grey bars to the right of the mask are the mikro-titlebars, they are the top part of the big mikroamp window, the top one is active, the bottom one is inactive. Under the mask we have the three modes of the big window, top to bottom: play, stop and pause. Under the mikro-titlebars, the small versions, again (top to bottom): play, stop and pause. In the bottom part of the file, the tray icons (left to right): play, stop and pause (in Win95-98-2000 only 16 colours will be shown in the tray, although this can be fixed by hex-editing explorer.exe). In the bottom right corner of this file there are two key pixels, the bottom one (in the very corner) defines the transparent colour of the tray icons, the top one should be black, pure black, or there may be a bug in the big pause.  
   
 You can get the MikroAmp plugin [HERE](http://%3Cbr%20/%3Ehttp:/classic.winamp.com/plugins/detail.jhtml?componentID=63522%3Cbr%20/%3E) (330kb)  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **WINAMPMB.TXT**  
   
 This text file is actually an html file with .txt extension. If you are using MikroAMP this file will be shown by default inside the minibrowser, it is commonly used to show an image with the style of the rest of the skin, or a link to your homepage, or a logo, or some info about you or the skin... In this template I just use this file to show an image called MBINNER.BMP (if you want to have images, they must be .bmp - gifs and jpgs won't be extracted, remember: only BMPs). The images used in this file may be called whatever you want, just be sure to have the same name in the file and inside winampmb.txt.  
   
 If you're working with a decompressed skin (you have the different files stored in a folder inside winamp's skins folder), you'll notice that a new file called winampmb.htm is created. This is the file that is actually used, so you may make changes to winampmb.txt that don't show up in the minibrowser, because the .htm file remains the same. To avoid this, delete winampmb.htm everytime you edit winampmb.txt.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **AMAROK.BMP (280×132) template and description by ¤db¤**  
   
@@ -379,7 +356,6 @@ Like in PLEDIT.BMP, there are two sections on the bottom of the window (but at t
 When testing your Amarok skin on Winamp, remember that in order for it to load, you need to load a different skin, and then reload the one with your Amarok skin. This seems to be the case for all skinnable plugins.  
   
 You can get the Amarok plugin [HERE](http://classic.winamp.com/plugins/detail.jhtml?componentId=6960) (118kb)  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **VIDAMP.BMP (280×174) template and description by ¤db¤**  
   
@@ -399,7 +375,6 @@ As you can clearly see, the vidamp skin was based on PLEDIT.BMP (and somewhat sl
 When testing your VidAmp skin on Winamp, remember that in order for it to load, you need to load a different skin, and then reload the one with your VidAmp skin. This seems to be the case for all skinnable plugins.  
   
 You can get the VidAmp plugin [HERE](http://classic.winamp.com/plugins/detail.jhtml?componentId=22629)(112kb)  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **CURSORS**  
 Winamp lets you define custom cursors, which will be used by winamp and only by winamp (when the mouse is over any of winamp's windows, except the minibrowser and avs). If you don't want to make custom cursors, don't include any, winamp will use the default ones. These are the different cursors and where should the mouse be for them to be shown:  
@@ -438,20 +413,17 @@ Note: The cursors used in the playlist window are used in the minibrowser, video
 There are usually 4 more cursors in the skins: volbar.cur, wsclose.cur, wswinbut.cur, wsmin.cur, but they are never used, at least in the last versions of winamp, so there's no need of including them. The cursors shown when the mouse is over the app-buttons are the same in normal and winshade mode, except for the main menu button. You can make animated cursors, but you have to name them with the extension .cur (animated cursors are usually .ani files).  
   
 You may not want to make 24 different cursors but a 'normal' cursor, a 'titlebar' cursor, a 'vertical slider' cursor, a 'close cursor'... If that's the case you can use a little utility made by skinme! called CursorMultiply. I'm not explaining how this works because it's everything explained inside it, just extract the file CursorMultiply.zip and read its readme.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **SKELETONS.BMP  
 SKELETONS2.BMP**  
   
 These files are NOT part of the skin, you shouldn't include them when you publish your skin, they are intended merely as a tool. They show all the windows of winamp so that you can paint in these files and then crop the different pieces and components into the appropriate files, although you'd still have to make the pressed state of the buttons and other things. In skeletons.bmp you'll find the playlist window horizontally and vertically stretched, so that all the different tiles and stacks are shown. In skeletons.bmp all the windows are the same size (except avs) and the layout is the "standard" one. Depending on the kind of skin you are working on, you may like one of the skeletons files better better than the other.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
   
 **Acknowledgements**  
   
 First of all I want to thank Misha Klement (Cyana) for the excelent [Template Amp](http://www.winamp.com/skins/details.php?id=71571) , which I used as a base for this template.  
 And, of course, all the regulars of the [Skin Love](http://forums.winamp.com/forumdisplay.php?s=&forumid=5) forum and especially: skinme! for his CursorMultiply utility, Kenny D. for the name suggestion, ¤db¤ for his constant support, ideas and criticism (and for amarok and vidamp templates), Mr Jones for his help (actually, he did most of the work) updating to WA2.9... and all the others.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)  
   
 **History**  
 1.0.0: First version  
@@ -472,4 +444,3 @@ And, of course, all the regulars of the [Skin Love](http://forums.winamp.com/for
 1.5: Added Video.bmp, gen.bmp and genex.bmp support (i.e. adapt to Winamp 2.9), updated readme, this bit done by Jones :-)  
 1.5.1: Bug fixed in skeletons (+20/0/-20 changed to +12/0/-12)  
 This Tutorial last updated 15th May 2003 1112.  
-[Return to Index](http://forums.winamp.com/showthread.php?p=951257#index)
