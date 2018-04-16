@@ -86,12 +86,12 @@ There's nothing really special with this file, it is the background of the main 
   
 Most of the areas will be covered by the actual components found in other files, so whatever you paint here won't ever be seen in winamp. These are the only component areas that will show in main.bmp:  
   
--The big numbers (those 5 boxes on the left) when there's no file playing.  
--The posbar, (that long strip over the control buttons) when there's no file playing.  
--The vis (the box under the numbers) when it's deactivated or no file is playing.  
--The kbps & khz areas (the two little boxes to the right of the vis) when there's no file playing.  
--The winamp lightning bolt (bottom right corner). In WA2.9 this now triggers the Media Library plugin (if installed), it can be toggled in the main Winamp Preferences area.In versions of WA lower than 2.9 it triggers the Winamp credits box.  
--The non-bitmap text box (the dark long box to the right of the numbers) if you are using bitmap fonts (see later).  
+- The big numbers (those 5 boxes on the left) when there's no file playing.  
+- The posbar, (that long strip over the control buttons) when there's no file playing.  
+- The vis (the box under the numbers) when it's deactivated or no file is playing.  
+- The kbps & khz areas (the two little boxes to the right of the vis) when there's no file playing.  
+- The winamp lightning bolt (bottom right corner). In WA2.9 this now triggers the Media Library plugin (if installed), it can be toggled in the main Winamp Preferences area.In versions of WA lower than 2.9 it triggers the Winamp credits box.  
+- The non-bitmap text box (the dark long box to the right of the numbers) if you are using bitmap fonts (see later).  
   
 You can fill all the other component areas with a plain colour, this will reduce the size of the final zip or wsz file.  
   
