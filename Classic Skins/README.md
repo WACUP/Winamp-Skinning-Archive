@@ -8,6 +8,8 @@ These skins are of a fixed format and based around simply defined bitmap images 
 
 - [Winamp Skinning Tutorial] - version 1.5.0 by SacRat and Imagine
 - [Unofficial WinAMP Skin Specifications] - version 1.2.1 by Strider
+- [Skinners Atlas] - version 1.5.1 by Jellby
 
 [Winamp Skinning Tutorial]: ./Winamp_skinning_tutorial_1_5_0.pdf
 [Unofficial WinAMP Skin Specifications]: ./skinspecs.pdf
+[Skinners Atlas]: ./Skinners\ Atlas/README.md
