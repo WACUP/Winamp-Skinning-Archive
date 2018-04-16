@@ -1,0 +1,1035 @@
+
+<!-- saved from url=(0151)https://ws-na.assoc-amazon.com/widgets/cm?o=1&p=48&l=ur1&category=mp3&f=ifr&linkID=f9c9098e3aa5882cb33b915590b6ecf4&t=m3forum-20&tracking_id=m3forum-20 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript">
+    /**
+ * Created by pedapav on 4/1/15.
+ *
+ * Tracking utilities to be used by client side rendering templates.
+ */
+
+window["trackingUtils"] = function(regionInt, foresterChannelUrlPrefix, impressionRecorderPrefix, pixelUrl,
+                                   clickUrl, impressionToken, slotNum, subtag, ABPPixelURL, disableABPCheck) {
+    var that = {},
+        refMatch = new RegExp("\/(ref=[\\w]+)\/\?", "i"),
+        encodeStr = function (b) {
+            return b && encodeURIComponent(b).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        },
+        rawRefURL = (function() {
+            var alink = document.createElement("a");
+            alink.href = (window.location !== window.parent.location) ? document.referrer : document.location;
+            // on IE, path name does not begin with a '/' - append it.
+            // on IE, 'host' property includes the port even if it is standard port 80/443
+            // but on IE, document.location.href does not include standard ports
+            // so we have to remove them before forming 'ref-refUrl'
+            return alink.protocol + "//" + alink.hostname +
+                ((alink.port === "" || alink.port === "80" || alink.port === "443") ? "" : (":" + alink.port)) +
+                (alink.pathname.indexOf("/") !== 0 ? ("/" + alink.pathname) : alink.pathname);
+        }()),
+        refRefURL = (function() {
+            return encodeStr(rawRefURL);
+        }()),
+        addQueryParameter = function(linkElem, paramName, paramValue, overwrite) {
+            if(typeof paramValue === "string" && paramValue !== "") {
+                if (linkElem.search === "") {
+                    linkElem.search = "?" + paramName + "=" + paramValue;
+                } else if(!linkElem.search.match(new RegExp("[?&]" + paramName + "="))) {
+                    linkElem.search = linkElem.search.replace(/\?/, "?" + paramName + "=" + paramValue + "&");
+                } else if(overwrite) {
+                    // query parameter already present - overwrite it, if forced
+                    linkElem.search = linkElem.search.replace(new RegExp(paramName + "=([^&]*)"), paramName + "=" + paramValue);
+                }
+            }
+            return linkElem;
+        },
+        addQueryParameterStr = function(linkTarget, paramName, paramValue) {
+            if(typeof paramValue === "string" && paramValue !== "") {
+                if (!linkTarget.match(/\?/)) {
+                    linkTarget = linkTarget + "?" + paramName + "=" + paramValue;
+                } else if(!linkTarget.match(paramName)) {
+                    linkTarget = linkTarget.replace(/\?/, "?" + paramName + "=" + paramValue + "&");
+                }
+            }
+            return linkTarget;
+        },
+        getEffectiveSlotNum = function(localSlotNum) {
+            var finalSlotNum = (typeof slotNum !== "undefined") ? slotNum : 0;
+            if(typeof localSlotNum !== "undefined") finalSlotNum = localSlotNum;
+            return finalSlotNum;
+        };
+
+    that.addRefUrls = function (allLinks, linkId, linkCode, trackingId) {
+        var amazonLinkPattern = new RegExp("^http://.*(amazon|endless|myhabit|amazonwireless|javari|smallparts)\\.(com|ca|co\\.jp|de|fr|co\\.uk|cn|it|es)/.*", "i"),
+            href, results, i;
+        for (i = 0; i < allLinks.length; i++) {
+            allLinks[i].rel = "nofollow";
+            href = String(allLinks[i].href);
+            if (results = href.match(amazonLinkPattern)) {
+                allLinks[i].href = that.addTrackingParameters(allLinks[i], linkId, linkCode, trackingId);
+            }
+        }
+    };
+
+    that.addRefRefUrl = function(linkElem) {
+        return addQueryParameter(linkElem, "ref-refURL", refRefURL);
+    };
+
+    that.getRefRefUrl = function() {
+        return refRefURL;
+    };
+
+    that.getRawRefUrl = function() {
+        return rawRefURL;
+    };
+
+    that.addSignature = function(linkElem, signature, signatureTimeStamp) {
+        return addQueryParameter(
+                addQueryParameter(linkElem, "sig", signature),
+            "sigts", signatureTimeStamp);
+    };
+
+    that.addLinkCode = function(linkElem, linkCode) {
+        return addQueryParameter(linkElem, "linkCode", linkCode);
+    };
+
+    that.addTrackingId = function(linkElem, trackingId) {
+        return addQueryParameter(linkElem, "tag", trackingId);
+    };
+
+    that.addLinkId = function(linkElem, linkId) {
+        return addQueryParameter(linkElem, "linkId", linkId);
+    };
+
+    that.addSubtag = function(linkElem, subtag) {
+        return addQueryParameter(linkElem, "ascsubtag", subtag);
+    };
+
+    that.addCreativeAsin = function(linkElem, adId){
+        return addQueryParameter(addQueryParameter(linkElem, "creativeASIN", adId), "adId", adId);
+    };
+
+    that.addAdType = function(linkElem, adType) {
+        return addQueryParameter(linkElem, 'adType', adType);
+    };
+
+    that.addAdMode = function(linkElem, adMode) {
+        return addQueryParameter(linkElem, 'adMode', adMode);
+    };
+
+    that.addAdFormat = function(linkElem, adFormat) {
+        return addQueryParameter(linkElem, 'adFormat', adFormat);
+    };
+
+    that.addImpressionTimestamp = function(linkElem, impressionTimestamp) {
+	if (typeof impressionTimestamp === "number") impressionTimestamp = impressionTimestamp.toString();
+        return addQueryParameter(linkElem, 'impressionTimestamp', impressionTimestamp);
+    };
+
+    that.convertToRedirectedUrl = function(linkElem, prefix, destParamName) {
+        var alink = document.createElement("a");
+        alink.setAttribute("href", prefix);
+        if(typeof destParamName !== "undefined") {
+            addQueryParameter(alink, destParamName, encodeStr(linkElem.getAttribute("href")), true);
+        } else {
+            alink.setAttribute("href", prefix + "/" + alink.getAttribute("href"));
+        }
+        linkElem.setAttribute("href", alink.getAttribute("href"));
+        return linkElem;
+    };
+
+    that.getImpressionToken = function() {
+        return impressionToken;
+    };
+
+    that.getClickUrl = function() {
+        return clickUrl;
+    };
+
+    that.addImpressionToken = function(linkElem, localSlotNum) {
+        var finalSlotNum = getEffectiveSlotNum(localSlotNum);
+        if(typeof impressionToken === "string" && impressionToken !== "") {
+            addQueryParameter(linkElem, "imprToken", impressionToken);
+            if(typeof finalSlotNum !== "undefined") addQueryParameter(linkElem, "slotNum", finalSlotNum);
+        }
+        return linkElem;
+    };
+
+    that.addImpressionTokenStr = function(url, localSlotNum) {
+        var finalSlotNum = getEffectiveSlotNum(localSlotNum);
+        if(typeof impressionToken === "string" && impressionToken !== "") {
+            url = addQueryParameterStr(url, "imprToken", impressionToken);
+            if(typeof finalSlotNum !== "undefined") url = addQueryParameterStr(url, "slotNum", finalSlotNum);
+        }
+        return url;
+    };
+
+    that.addTrackingParameters = function(linkElem, linkId, linkCode, trackingId, refMarker, creativeASIN, signature, signatureTimeStamp, adType, adMode, adFormat, impressionTimestamp) {
+        return that.addSignature(
+            that.addCreativeAsin(
+                that.addLinkId(
+                    that.addTrackingId(
+                        that.addSubtag(
+                            that.addLinkCode(
+                                that.addRefRefUrl(
+                                    that.addImpressionToken(
+                                        that.addRefMarker(
+                                            that.addAdType(
+                                                that.addAdMode(
+                                                    that.addAdFormat(
+                                                        that.addImpressionTimestamp(linkElem, impressionTimestamp),
+                                                    adFormat),
+                                                adMode),
+                                            adType),
+                                        refMarker))),
+                                linkCode),
+                            subtag),
+                        trackingId),
+                    linkId),
+                creativeASIN),
+            signature, signatureTimeStamp
+        );
+    };
+
+    that.addRefMarker = function(linkElem, refMarker) {
+        var match, endsWithSlash = false;
+        if(typeof refMarker === "undefined") return linkElem;
+        if(match = linkElem.pathname.match(refMatch)) {
+            linkElem.pathname = linkElem.pathname.replace(match[1], "ref=" + refMarker);
+        } else {
+            endsWithSlash = (linkElem.pathname.charAt(linkElem.pathname.length - 1) === '/');
+            linkElem.pathname = linkElem.pathname + (endsWithSlash ? "" : "/") + "ref=" + refMarker;
+        }
+        return linkElem;
+    };
+
+    that.getRefMarker = function(linkElem) {
+        var match;
+        if(match = linkElem.pathname.match(refMatch)) {
+            return match[1].substr(4);
+        } else return undefined;
+    };
+
+    that.makeForesterCall = function(data) {
+        var finalAAXPixelUrl = undefined, json;
+        data["refUrl"] = (window.location !== window.parent.location)? document.referrer : document.location.href;
+        if(typeof JSON !== 'undefined') json = JSON.stringify(data);
+        else if(typeof amzn_assoc_utils !== "undefined" && typeof amzn_assoc_utils["stringify"] === "function") json = amzn_assoc_utils.stringify(data);
+        else return;
+        if(typeof pixelUrl === "string") {
+            finalAAXPixelUrl = pixelUrl + "?assoc_payload=" + encodeURIComponent(json);
+        }
+
+        // (new Image()).src = finalForesterUrl;
+        if(typeof finalAAXPixelUrl !== "undefined") (new Image()).src = finalAAXPixelUrl;
+    };
+
+    that.recordImpression = function(linkCode, trackingId, data, skipIRCall) {
+        data["linkCode"] = linkCode;
+        data["trackingId"] = trackingId;
+        if(disableABPCheck || !ABPPixelURL) {
+            that.makeForesterCall(data);
+        } else {
+            that.addABPFlag(data, that.makeForesterCall);
+        }
+        if(typeof skipIRCall === 'undefined' || !skipIRCall) (new Image()).src = impressionRecorderPrefix + "?l=" + linkCode + "&t=" + trackingId + "&o=" + regionInt + "&cb=" + (new Date()).getTime() ;
+    };
+
+    that.addAAXClickUrls = function(links){
+        var aaxClickUrl, i, href;
+        //convert all given links with AAX click urls
+        if(typeof links === 'undefined' || typeof clickUrl === 'undefined') return;
+
+        for (i = 0; i < links.length; i++) {
+            href = String(links[i].href);
+            if(href.indexOf(clickUrl) < 0) {
+                aaxClickUrl = clickUrl + href;
+                links[i].href = aaxClickUrl;
+            }
+        }
+    };
+
+    that.addAAXClickUrl = function(url){
+        //append given url with AAX click url
+        if(typeof url === 'undefined' || url.indexOf(clickUrl) === 0) return url;
+        return clickUrl + url;
+    };
+
+    that.updateLinks = function(links, updaterFunc) {
+        var i, href;
+        if(typeof updaterFunc !== "function") return;
+        for(i = 0; i < links.length; i++) {
+            href = String(links[i].href);
+            links[i].href = updaterFunc(href);
+        }
+    };
+
+    that.elementInViewPort = function(el) {
+        var rect = el.getBoundingClientRect(),
+            inViewPort = (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+
+        return {
+            "posX": rect.left + window.pageXOffset,
+            "posY": rect.top + window.pageYOffset,
+            "inViewPort": inViewPort
+        };
+    };
+
+    that.initialViewabilityCall = function(aboveTheFold, topPos, leftPos, slotNum){
+    	var finalAAXPixelUrl = undefined, json,
+        data = {"adViewability":[{"above_the_fold": aboveTheFold, "topPos": topPos, "leftPos": leftPos, "slotNum": slotNum}]};
+        if(typeof JSON !== 'undefined') json = JSON.stringify(data);
+        else if(typeof amzn_assoc_utils !== "undefined" && typeof amzn_assoc_utils["stringify"] === "function") json = amzn_assoc_utils.stringify(data);
+        else json = "";
+    	if(typeof pixelUrl === "string") {
+            finalAAXPixelUrl = pixelUrl + json;
+        }
+        if(typeof finalAAXPixelUrl !== "undefined") (new Image()).src = finalAAXPixelUrl + "&cb=" + (new Date()).getTime() ;
+    };
+
+    that.makeViewabilityCall = function(slotNum){
+    	var finalAAXPixelUrl = undefined, json,
+    	data = {"adViewability":[{"viewable": true , "slotNum": slotNum}]};
+        if(typeof JSON !== 'undefined') json = JSON.stringify(data);
+        else if(typeof amzn_assoc_utils !== "undefined" && typeof amzn_assoc_utils["stringify"] === "function") json = amzn_assoc_utils.stringify(data);
+        else json = "";
+        if(typeof pixelUrl === "string") {
+            finalAAXPixelUrl = pixelUrl + json;
+        }
+        if(typeof finalAAXPixelUrl !== "undefined") (new Image()).src = finalAAXPixelUrl + "&cb=" + (new Date()).getTime() ;
+    };
+
+    that.addABPFlag = function(data, callback) {
+        var detected = false,
+        checksRemain = 2,
+        img1 = document.body ? document.body.appendChild(new Image()) : new Image(),
+        img2 = document.body ? document.body.appendChild(new Image()) : new Image(),
+        error1 = false,
+        error2 = false,
+        random = Math.random() * 11,
+        px = ABPPixelURL + "?ch=*&rn=*",
+        beforeCheck = function(callback, timeout) {
+            if (checksRemain === 0 || timeout > 1E3) {
+                data.supplySideMetadata = {
+                    ABPInstalled: checksRemain === 0 && detected
+                };
+                callback(data);
+            } else {
+                setTimeout(function() {
+                    beforeCheck(callback, timeout * 2);
+                }, timeout * 2);
+            }
+        },
+        checkImages = function() {
+            if(--checksRemain)
+                return;
+            detected = !error1 && error2;
+        };
+
+        img1.style.display = "none";
+        img2.style.display = "none";
+
+        img1.onload = checkImages;
+        img1.onerror = function() {
+            error1 = true;
+            checkImages();
+        };
+        img1.src = px.replace(/\*/, 1).replace(/\*/, random);
+
+        img2.onload = checkImages;
+        img2.onerror = function() {
+            error2 = true;
+            checkImages();
+        };
+        img2.src = px.replace(/\*/, 2).replace(/\*/, random);
+        beforeCheck(callback, 250);
+    };
+
+    return that;
+};
+if(typeof amzn_assoc_utils === "undefined") {
+    amzn_assoc_utils = {};
+}
+
+if(typeof amzn_assoc_utils.parse === "undefined") {
+    amzn_assoc_utils.parse = (function () {
+        "use strict";
+        var at,
+            ch,
+            escapee = {
+                '"': '"',
+                '\\': '\\',
+                '/': '/',
+                b: '\b',
+                f: '\f',
+                n: '\n',
+                r: '\r',
+                t: '\t'
+            },
+            text,
+
+            error = function (m) {
+                throw {
+                    name: 'SyntaxError',
+                    message: m,
+                    at: at,
+                    text: text
+                };
+            },
+            next = function (c) {
+                if (c && c !== ch) {
+                    error("Expected '" + c + "' instead of '" + ch + "'");
+                }
+
+                ch = text.charAt(at);
+                at += 1;
+                return ch;
+            },
+
+            number = function () {
+                var number,
+                    string = '';
+
+                if (ch === '-') {
+                    string = '-';
+                    next('-');
+                }
+                while (ch >= '0' && ch <= '9') {
+                    string += ch;
+                    next();
+                }
+                if (ch === '.') {
+                    string += '.';
+                    while (next() && ch >= '0' && ch <= '9') {
+                        string += ch;
+                    }
+                }
+                if (ch === 'e' || ch === 'E') {
+                    string += ch;
+                    next();
+                    if (ch === '-' || ch === '+') {
+                        string += ch;
+                        next();
+                    }
+                    while (ch >= '0' && ch <= '9') {
+                        string += ch;
+                        next();
+                    }
+                }
+                number = +string;
+                if (!isFinite(number)) {
+                    error("Bad number");
+                } else {
+                    return number;
+                }
+            },
+
+            string = function () {
+                var hex,
+                    i,
+                    string = '',
+                    uffff;
+                if (ch === '"') {
+                    while (next()) {
+                        if (ch === '"') {
+                            next();
+                            return string;
+                        }
+                        if (ch === '\\') {
+                            next();
+                            if (ch === 'u') {
+                                uffff = 0;
+                                for (i = 0; i < 4; i += 1) {
+                                    hex = parseInt(next(), 16);
+                                    if (!isFinite(hex)) {
+                                        break;
+                                    }
+                                    uffff = uffff * 16 + hex;
+                                }
+                                string += String.fromCharCode(uffff);
+                            } else if (typeof escapee[ch] === 'string') {
+                                string += escapee[ch];
+                            } else {
+                                break;
+                            }
+                        } else {
+                            string += ch;
+                        }
+                    }
+                }
+                error("Bad string");
+            },
+
+            white = function () {
+                while (ch && ch <= ' ') {
+                    next();
+                }
+            },
+
+            word = function () {
+                switch (ch) {
+                    case 't':
+                        next('t');
+                        next('r');
+                        next('u');
+                        next('e');
+                        return true;
+                    case 'f':
+                        next('f');
+                        next('a');
+                        next('l');
+                        next('s');
+                        next('e');
+                        return false;
+                    case 'n':
+                        next('n');
+                        next('u');
+                        next('l');
+                        next('l');
+                        return null;
+                }
+                error("Unexpected '" + ch + "'");
+            },
+
+            value,
+
+            array = function () {
+                var array = [];
+
+                if (ch === '[') {
+                    next('[');
+                    white();
+                    if (ch === ']') {
+                        next(']');
+                        return array;
+                    }
+                    while (ch) {
+                        array.push(value());
+                        white();
+                        if (ch === ']') {
+                            next(']');
+                            return array;
+                        }
+                        next(',');
+                        white();
+                    }
+                }
+                error("Bad array");
+            },
+
+            object = function () {
+                var key,
+                    object = {};
+
+                if (ch === '{') {
+                    next('{');
+                    white();
+                    if (ch === '}') {
+                        next('}');
+                        return object;
+                    }
+                    while (ch) {
+                        key = string();
+                        white();
+                        next(':');
+                        if (Object.hasOwnProperty.call(object, key)) {
+                            error('Duplicate key "' + key + '"');
+                        }
+                        object[key] = value();
+                        white();
+                        if (ch === '}') {
+                            next('}');
+                            return object;
+                        }
+                        next(',');
+                        white();
+                    }
+                }
+                error("Bad object");
+            };
+
+        value = function () {
+            white();
+            switch (ch) {
+                case '{':
+                    return object();
+                case '[':
+                    return array();
+                case '"':
+                    return string();
+                case '-':
+                    return number();
+                default:
+                    return ch >= '0' && ch <= '9' ? number() : word();
+            }
+        };
+        return function (source, reviver) {
+            var result;
+
+            text = source;
+            at = 0;
+            ch = ' ';
+            result = value();
+            white();
+            if (ch) {
+                error("Syntax error");
+            }
+
+            return result;
+        };
+    }());
+}
+
+if(typeof amzn_assoc_utils.addCssRules === "undefined") {
+    amzn_assoc_utils.addCssRules = function (mediaQuery, rules) {
+        var styleEl = document.createElement('style'),
+            styleSheet, i = 0, mediaQueryStr = "";
+
+        // Apparently some version of Safari needs the following line? I dunno.
+        styleEl.appendChild(document.createTextNode(''));
+
+        // Append style element to head
+        document.head.appendChild(styleEl);
+
+        // Grab style sheet
+        styleSheet = styleEl.sheet;
+
+        for (i = 0, rl = rules.length; i < rl; i++) {
+            var j = 1, rule = rules[i], selector = rules[i][0], propStr = '';
+            // If the second argument of a rule is an array of arrays, correct our variables.
+            if (Object.prototype.toString.call(rule[1][0]) === "[object Array]") {
+                rule = rule[1];
+                j = 0;
+            }
+
+            for (var pl = rule.length; j < pl; j++) {
+                var prop = rule[j];
+                propStr += prop[0] + ":" + prop[1] + (prop[2] ? " !important" : "") + ";\n";
+            }
+
+            if (typeof mediaQuery === "string") {
+                styleSheet.insertRule(mediaQuery + "{" + selector + "{" + propStr + "}}",
+                    styleSheet.cssRules.length);
+            }
+            else {
+                // Insert CSS Rule
+                styleSheet.insertRule(selector + '{' + propStr + '}', styleSheet.cssRules.length);
+            }
+        }
+    };
+}
+
+if(typeof amzn_assoc_utils === "undefined") {
+    amzn_assoc_utils = {};
+}
+
+if(typeof amzn_assoc_utils.assocRuntimeMaker === "undefined") {
+    amzn_assoc_utils.assocRuntimeMaker = function (wsUrl, wsCdnUrl, slotNum) {
+        var rt = {}, that = {}, handlers = [], timer,
+            initHandler = function (handler) {
+                handlers.push(handler);
+                if (window.addEventListener) {
+                    window.addEventListener("message", handler, false);
+                }
+                else {
+                    window.attachEvent("onmessage", handler);
+                }
+            },
+            initialized = false,
+            cbRegistered = false,
+            cbs = [];
+        that.listen = function() {
+            // source of runtime data - typically the parent page (or associates page)
+            initHandler(function (e) {
+                var obj;
+                // only iframes from widget server can send messages to parent
+                if (e.origin.indexOf(wsUrl) < 0 &&
+                    e.origin.indexOf(wsCdnUrl) < 0) return;
+                if (typeof e.data === "string" && e.data) {
+                    obj = JSON.parse(e.data);
+                    if (obj.slotNum === slotNum) {
+                        if (typeof obj.op !== "undefined" && obj.op === "getRuntimeData") {
+                            e.source.postMessage(JSON.stringify({
+                                "slotNum": slotNum,
+                                "rt": rt
+                            }), "*");
+
+                        }
+                    }
+                }
+            });
+        };
+        that.init = function (rd, dontListenRightAway) {
+            if (typeof rd === "object") {
+                // source of runtime data - typically the parent page (or associates page)
+                rt = rd;
+                initialized = true;
+                if(typeof dontListenRightAway === "undefined" || !dontListenRightAway) {
+                    that.listen();
+                }
+            }
+        };
+        that.destroy = function () {
+            var i = 0;
+            initialized = false;
+            cbs = [];
+            rt = {};
+            cbRegistered = false;
+            for (i = 0; i < handlers.length; i++) {
+                window.removeEventListener("message", handlers[i], false);
+            }
+            handlers = [];
+            clearTimeout(timer);
+        };
+        that.reinit = function(rd, dontListenRightAway) {
+            var existingCallbacks = cbs, i;
+        	that.destroy();
+            that.init(rd, dontListenRightAway);
+        	for (i = 0; i < existingCallbacks.length; i++) {
+                if (typeof existingCallbacks[i] === "function") {
+                    existingCallbacks[i](rd);
+                }
+            }
+        };
+        that.append = function(rd) {
+            var prop;
+            for(prop in rd) {
+                if(rd.hasOwnProperty(prop)) {
+                    rt[prop] = rd[prop];
+                }
+            }
+        };
+        that.retrieveRuntime = function (cb, timeout, backupRt) {
+            // consumer of runtime data - typically inside the iframe
+            if (!initialized) {
+                cbs.push(cb);
+                if (!cbRegistered) {
+                    initHandler(function (e) {
+                        var i = 0;
+                        if (!initialized && typeof e.data === "string" && e.data) {
+                            // inside iframe amzn_assoc_utils may not be there
+                            // but we are sure that our iframes contain DOCTYPE tag
+                            // so it is safe to use JSON.parse here
+
+                            try {
+                                var data = JSON.parse(e.data);
+                                if (data.slotNum === slotNum && typeof data.rt !== "undefined") {
+                                    rt = data.rt;
+                                    clearTimeout(timer);
+                                    for (i = 0; i < cbs.length; i++) {
+                                        if (typeof cbs[i] === "function") {
+                                            cbs[i](rt);
+                                        }
+                                    }
+                                    initialized = true;
+                                }
+                            }
+                            catch (e) {
+                            }
+                        }
+                    });
+                    window.parent.postMessage(JSON.stringify({
+                        "slotNum": slotNum,
+                        "op": "getRuntimeData"
+                    }), "*");
+                    if (typeof timeout === "number" && typeof backupRt === "object") {
+                        timer = setTimeout(function () {
+                            rt = backupRt;
+                            for (i = 0; i < cbs.length; i++) {
+                                if (typeof cbs[i] === "function") {
+                                    cbs[i](rt);
+                                }
+                            }
+                            initialized = true;
+                        }, timeout);
+                    }
+                    cbRegistered = true;
+                }
+            }
+            else {
+                // data already initialized - can callback directly
+                if (typeof cb === "function") cb(rt);
+            }
+        };
+        that.getValue = function (key) {
+            if (rt.hasOwnProperty(key)) return rt[key];
+            else return null;
+        };
+        return that;
+    };
+}
+
+if(typeof amzn_assoc_utils.assocRuntime !== "object") amzn_assoc_utils.assocRuntime = {};
+amzn_assoc_utils.assocRuntime["${slotNum}"] = amzn_assoc_utils.assocRuntimeMaker("https://ws-na.amazon-adsystem.com", "//z-na.amazon-adsystem.com", "${slotNum}");
+window.amznBannerAd = function(spec) {
+	var that = {}, foresterVip = {
+		    1: "fls-na.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    2: "fls-eu.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    3: "fls-eu.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    8: "fls-eu.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    9: "fls-fe.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    15: "fls-na.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    28: "fls-fe.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    29: "fls-eu.amazon-adsystem.com/1/associates-ads/1/OP/",
+		    30: "fls-eu.amazon-adsystem.com/1/associates-ads/1/OP/"
+		};
+
+	// This call was earlier made only for onejs based adcode(as only they were
+	// served via WS), now this will be made for all banners(onejs and iframe)
+	// as both are served from WS.
+    that.makeForesterCall = function(amzn_assoc_ad_spec, action) {
+		var p = {};
+		var adunit_properties = {};
+		p.mobile_supported = "true";
+		p.tracking_id = amzn_assoc_ad_spec.tracking_id;
+		p.action = action;
+		p.adunit_type = amzn_assoc_ad_spec["ad_type"];
+		adunit_properties.height = amzn_assoc_ad_spec.height;
+		adunit_properties.width = amzn_assoc_ad_spec.width;
+		adunit_properties.category = amzn_assoc_ad_spec.campaigns;
+		adunit_properties.is_responsive = amzn_assoc_ad_spec.is_responsive;
+		adunit_properties.marketplace = amzn_assoc_ad_spec.marketplace;
+		adunit_properties.link_id = amzn_assoc_ad_spec.linkid;
+		adunit_properties.adunit_subtype = amzn_assoc_ad_spec.banner_type;
+		adunit_properties.region = amzn_assoc_ad_spec.region;
+		adunit_properties.adunit_script_type = amzn_assoc_ad_spec.f;
+		adunit_properties.link_code = amzn_assoc_ad_spec.lc_value;
+		p.adunit_properties = adunit_properties;
+		p.logType = "banner_impressions";
+		amazon_assoc_ir_f_call(p);
+    };
+
+	var adUnitData = {
+		"adUnitType" : spec.ad_type,
+		"trackingId" : spec.trackingId,
+		"region" : spec.region,
+		"deviceType" : spec.deviceType,
+		"logType" : "banners",
+		"viewerCountry" : spec.viewerCountry,
+		"marketplace" : spec.marketplace,
+		"link_id" : spec.linkId,
+		"impressionId" : spec.impressionId,
+		"action" : "impressions",
+		"regionId" : spec.regionInt,
+		"campaigns" : spec.campaigns,
+		"bannerId" : spec.bannerId,
+		"width" : spec.width,
+		"height" : spec.height,
+		"linkCode" : spec.linkCode,
+		"bannerType" : spec.bannerType,
+		"p" : spec.p,
+		"slotNum" : spec.slotNum,
+		"isResponsive" : spec.isResponsive,
+		"resolvedItems" : spec.resolvedItems
+	}, trackingUtils = spec["trackingUtils"];
+
+	that.init = function() {
+		that.setImageAndLandingUrlFromResolvedItems();
+		that.enhanceLinkElem();
+		if (!spec.isIframe) {
+			// This call is new addition after moving banners to WidgetServer,
+			// not for Iframe based adcode as they don't have AAX integration.
+			trackingUtils.recordImpression(spec.linkCode, spec.trackingId,
+					adUnitData);
+		}
+		    		var amazon_assoc_ir_f_call_associates_ads = function(map) {
+			var logTypeStr = "", foresterURL, json;
+			if(typeof JSON !== 'undefined') json = JSON.stringify(map);
+			else if(typeof amzn_assoc_utils !== 'undefined') json = amzn_assoc_utils.stringify(map);
+			else return;
+			if(typeof map.logType !== "undefined") logTypeStr = "&logType=" + map.logType;
+			// forester URLs are of format //<end_point>/<api_version>/<channel_id>/<channel_version>/<OPERATION>/
+			// Depending on operation, we either pass the data in the URI or we pass them as query parameters
+			// if operation is OP, data must be in query parameters while if operation is TOP,
+			// data must be in the URI itself
+			foresterURL = "//fls-na.amazon-adsystem.com/1/associates-ads/1/OP/r/json";
+						    foresterURL = foresterURL + "?cb=" + (new Date()).getTime() + logTypeStr + "&p=" + encodeURIComponent(json);
+						(new Image()).src = foresterURL;
+		};
+    var amazon_assoc_ir_f_call = amazon_assoc_ir_f_call_associates_ads;
+		// We can remove this call too, once the iframe banner also goes behind
+		// AAX, but foe now, this is the only logging call made by Iframe
+		// banners
+		that.makeForesterCall(spec, 'onload');
+		// mimicking call currently made by adserver.
+		that.makeLegacyTrackingCalls(spec);
+	};
+
+	that.makeLegacyTrackingCalls = function(spec) {
+	    var map = {
+	        "program": spec.associateProgramID,
+	        "tag": spec.trackingId,
+	        "linkCode": spec.linkCode,
+	        "refUrl": (window.location !== window.parent.location) ? document.referrer : document.location.href,
+	        "panda": true
+	    },
+	    json = JSON.stringify(map);
+	    (new Image()).src = "//" + foresterVip[spec.associateProgramID] + "?cb=" + (new Date()).getTime() + "&p=" + encodeURIComponent(json);
+	    // Making the below impression recorder call to get banner impression count in ac reports.
+	    (new Image()).src = spec.impressionRecorderPrefix + "?l=" + spec.linkCode + "&t=" + spec.trackingId + "&o=" + spec.associateProgramID + "&cb=" + (new Date()).getTime();
+	}
+
+	that.enhanceLinkElem = function() {
+		var linkElem = document.getElementById(spec.widgetId + "_a");
+
+		if (spec.isIframe) {
+			if (linkElem.search === "") {
+				linkElem.search = "?tag=" + spec.trackingId + "&linkCode="
+						+ spec.linkCode;
+			} else {
+				linkElem.search = linkElem.search.replace(/\?/, "?tag="
+						+ spec.trackingId + "&linkCode=" + spec.linkCode + "&");
+			}
+			return;
+		}
+		trackingUtils.addRefMarker(linkElem, spec.refTag);
+		trackingUtils.addLinkCode(linkElem, spec.linkCode);
+		trackingUtils.addTrackingId(linkElem, spec.trackingId);
+		trackingUtils.addLinkId(linkElem, spec.linkId);
+		trackingUtils.addImpressionToken(linkElem, spec.slotNum);
+		trackingUtils.addRefRefUrl(linkElem);
+		linkElem.href = trackingUtils.addAAXClickUrl(linkElem.href)
+	};
+
+	that.setImageAndLandingUrlFromResolvedItems = function() {
+		var imageUrl = "", landingPageUrl = "", bannerType = "", seperator = "/", bannerArray, width, height, privacyCoords, selectedIndex = 0;
+		if (spec.isResponsive === "true")
+			return;
+
+		if (typeof spec["resolvedItems"] !== "undefined") {
+
+			if (typeof spec["resolvedItems"]["CATEGORY_BANNER"] !== "undefined") {
+				bannerType = "CATEGORY_BANNER";
+			} else if (typeof spec["resolvedItems"]["NON_CATEGORY_BANNER"] !== "undefined") {
+				bannerType = "NON_CATEGORY_BANNER";
+			} else {
+				imageUrl = spec.defaultImageUrl;
+				landingPageUrl = "";
+				width = imageUrl.substring(imageUrl.lastIndexOf("/") + 1,
+						imageUrl.lastIndexOf("x"));
+				height = imageUrl.substring(imageUrl.lastIndexOf("x") + 1,
+						imageUrl.lastIndexOf("."));
+				privacyCoords = "(0," + (height - 12) + "," + width + ","
+						+ height + ")";
+			}
+
+			if (bannerType !== "") {
+				bannersArray = spec["resolvedItems"][bannerType];
+				selectedIndex = Math.floor(Math.random() * bannersArray.length);
+				imageUrl = bannersArray[selectedIndex]["imageUrl"];
+				landingPageUrl = bannersArray[selectedIndex]["landingPageUrl"];
+				width = bannersArray[selectedIndex]["width"];
+				height = bannersArray[selectedIndex]["height"];
+				privacyCoords = "(0," + (height - 12) + "," + width + ","
+						+ height + ")";
+			}
+			document.getElementById(spec.widgetId + "_img").src = spec.imgUrl
+					+ seperator + imageUrl;
+			document.getElementById(spec.widgetId + "_a").href = spec.amznUrl
+					+ seperator + landingPageUrl;
+			document.getElementById(spec.widgetId + "_privacybox").coords = privacyCoords;
+
+		}
+	};
+
+	return that;
+};
+        		var amazon_assoc_ir_f_call_associates_ads = function(map) {
+			var logTypeStr = "", foresterURL, json;
+			if(typeof JSON !== 'undefined') json = JSON.stringify(map);
+			else if(typeof amzn_assoc_utils !== 'undefined') json = amzn_assoc_utils.stringify(map);
+			else return;
+			if(typeof map.logType !== "undefined") logTypeStr = "&logType=" + map.logType;
+			// forester URLs are of format //<end_point>/<api_version>/<channel_id>/<channel_version>/<OPERATION>/
+			// Depending on operation, we either pass the data in the URI or we pass them as query parameters
+			// if operation is OP, data must be in query parameters while if operation is TOP,
+			// data must be in the URI itself
+			foresterURL = "//fls-na.amazon-adsystem.com/1/associates-ads/1/OP/r/json";
+						    foresterURL = foresterURL + "?cb=" + (new Date()).getTime() + logTypeStr + "&p=" + encodeURIComponent(json);
+						(new Image()).src = foresterURL;
+		};
+    var amazon_assoc_ir_f_call = amazon_assoc_ir_f_call_associates_ads;
+    var amzn_assoc_ad_spec = {};
+    amzn_assoc_ad_spec.marketplace = "amazon";
+    amzn_assoc_ad_spec.region = "US";
+    amzn_assoc_ad_spec.trackingId = "m3forum-20";
+    amzn_assoc_ad_spec.mediaServerURL = "https://wms-na.amazon-adsystem.com/panda";
+    amzn_assoc_ad_spec.amznUrl = "https://www.amazon.com";
+    amzn_assoc_ad_spec.imgUrl = "https://images-na.ssl-images-amazon.com";
+    amzn_assoc_ad_spec.widgetId = "amznBanners_${placement}_${slotNum}";
+    amzn_assoc_ad_spec.campaigns = "${campaigns}";
+    amzn_assoc_ad_spec.ad_type = "banners";
+    amzn_assoc_ad_spec.debug = "${debug}";
+    amzn_assoc_ad_spec.linkid = "${linkid}";
+    amzn_assoc_ad_spec.bannerId = "${banner_id}";
+    amzn_assoc_ad_spec.width = "${width}";
+    amzn_assoc_ad_spec.height = "${height}";
+    amzn_assoc_ad_spec.bannerType = "${banner_type}";
+    amzn_assoc_ad_spec.p = "${p}";
+    amzn_assoc_ad_spec.isResponsive = "${isresponsive}";
+    amzn_assoc_ad_spec.slotNum = "${slotNum}";
+    amzn_assoc_ad_spec.regionInt = "1";
+    amzn_assoc_ad_spec.isIframe = true;
+    amzn_assoc_ad_spec.associateProgramID = "1";
+    amzn_assoc_ad_spec.foresterUrlPrefix = "//fls-na.amazon-adsystem.com/1/associates-ads/1/OP/r/json";
+    amzn_assoc_ad_spec.impressionRecorderPrefix = "//ir-na.amazon-adsystem.com/e/ir";
+    amzn_assoc_ad_spec.resolvedItems =  {"NON_CATEGORY_BANNER":[{"originalReference":{"cat":"mp3","bannerType":"rotating","size":48,"isResponsive":"false","src":{},"id":"rotating.mp3.48","destUrl":{"present":false},"cacheKey":"rotating.mp3.48","markerFoRelevanceSource":"Banners"},"imageUrl":"images/G/01/digital/music/associates/banners/june_2011/AmazonCloudPlayer_StoreFree_728_90px._V178214640_.gif","landingPageUrl":"b?node=163856011","width":728,"height":90,"type":"NON_CATEGORY_BANNER","extraInfo":{},"itemId":"rotating.mp3.48","sourceName":"Banners"},{"originalReference":{"cat":"mp3","bannerType":"rotating","size":48,"isResponsive":"false","src":{},"id":"rotating.mp3.48","destUrl":{"present":false},"cacheKey":"rotating.mp3.48","markerFoRelevanceSource":"Banners"},"imageUrl":"images/G/01/digital/music/associates/banners/giftstore_2011/AmazonMP3GiftStore2011_728_90px._V163424065_.gif","landingPageUrl":"b?node=116860011","width":728,"height":90,"type":"NON_CATEGORY_BANNER","extraInfo":{},"itemId":"rotating.mp3.48","sourceName":"Banners"}]};                         amzn_assoc_ad_spec.defaultImageUrl = "/images/G/01/rcm/728x90.gif";
+            </script>
+            
+
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Amazon Banner Ads</title>
+<style>
+    #amznBanners_${placement}_${slotNum}_div {
+        overflow: hidden;
+        display: block;
+    }
+    #amznBanners_${placement}_${slotNum}_img{
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+        position: relative;
+        display: block;
+    }
+</style>
+<style type="text/css">.c1-ui-state-hover {background-color:yellow !important; padding:5px !important }</style></head>
+<body marginwidth="0" style="margin-bottom: 0px; margin-top: 0px;">
+
+        <div id="amznBanners_${placement}_${slotNum}_div">
+            <img id="amznBanners_${placement}_${slotNum}_img" usemap="#amznBanners_${placement}_${slotNum}_boxmap" src="./AmazonMP3GiftStore2011_728_90px._V163424065_.gif">
+                <map name="amznBanners_${placement}_${slotNum}_boxmap">
+                    <area id="amznBanners_${placement}_${slotNum}_privacybox" shape="rect" coords="(0,78,728,90)" href="http://rcm-na.amazon-adsystem.com/e/cm/privacy-policy.html?o=1" target="_top" rel="nofollow">
+                    <area id="amznBanners_${placement}_${slotNum}_a" shape="rect" coords="0,0,10000,10000" href="https://www.amazon.com/b?tag=m3forum-20&amp;linkCode=ur1&amp;node=116860011" target="_top" rel="nofollow">
+                </map>
+        </div>
+
+
+
+        <script type="text/javascript">
+	        amzn_assoc_ad_spec.isIframe = true;
+	        amzn_assoc_ad_spec.linkCode = "ur1";
+            window.amznBannerAd(amzn_assoc_ad_spec).init();
+                		var amazon_assoc_ir_f_call_associates_ads = function(map) {
+			var logTypeStr = "", foresterURL, json;
+			if(typeof JSON !== 'undefined') json = JSON.stringify(map);
+			else if(typeof amzn_assoc_utils !== 'undefined') json = amzn_assoc_utils.stringify(map);
+			else return;
+			if(typeof map.logType !== "undefined") logTypeStr = "&logType=" + map.logType;
+			// forester URLs are of format //<end_point>/<api_version>/<channel_id>/<channel_version>/<OPERATION>/
+			// Depending on operation, we either pass the data in the URI or we pass them as query parameters
+			// if operation is OP, data must be in query parameters while if operation is TOP,
+			// data must be in the URI itself
+			foresterURL = "//fls-na.amazon-adsystem.com/1/associates-ads/1/OP/r/json";
+						    foresterURL = foresterURL + "?cb=" + (new Date()).getTime() + logTypeStr + "&p=" + encodeURIComponent(json);
+						(new Image()).src = foresterURL;
+		};
+    var amazon_assoc_ir_f_call = amazon_assoc_ir_f_call_associates_ads;
+        </script>
+    </body></html>
