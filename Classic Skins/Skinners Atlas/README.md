@@ -376,6 +376,8 @@ You can get the VidAmp plugin [HERE](http://classic.winamp.com/plugins/detail.jh
 ## CURSORS
 
 Winamp lets you define custom cursors, which will be used by winamp and only by winamp (when the mouse is over any of winamp's windows, except the minibrowser and avs). If you don't want to make custom cursors, don't include any, winamp will use the default ones. These are the different cursors and where should the mouse be for them to be shown:  
+
+### Main Window
   
 - `normal.cur`: Main window except titlebar, song title, volume, balance and posbar.  
 - `titlebar.cur`: Main window, titlebar except app-buttons.  
@@ -386,15 +388,21 @@ Winamp lets you define custom cursors, which will be used by winamp and only by 
 - `volbal.cur`: Main window, volume and balance controls.  
 - `posbar.cur`: Main window, posbar.  
 - `songname.cur`: Main window, song title.  
+
+### Main window (shade)
   
 - `wsnormal.cur`: Main window, winshade mode except appbuttons and posbar.  
 - `wsposbar.cur`: Main window, winshade mode, posbar.  
 - `mmenu.cur`: Main window, winshade mode, menu button (far left).  
 
+### Equalizer
+
 - `eqnormal.cur`: Equalizer window except titlebar and sliders.  
 - `eqtitle.cur`: Equalizer window, titlebar and winshade mode except close button.  
 - `eqclose.cur`: Equalizer window, close button.  
 - `eqslid.cur`: Equalizer window, sliders.  
+
+### Playlist
   
 - `pnormal.cur`: Playlist window except titlebar, resize button and scroll bar.  
 - `ptbar.cur`: Playlist window, titlebar except app-buttons.  
@@ -402,6 +410,8 @@ Winamp lets you define custom cursors, which will be used by winamp and only by 
 - `pwinbut.cur`: Playlist window, winshade button.  
 - `pvscroll.cur`: Playlist window, scroll bar.  
 - `psize.cur`: Playlist window, resize button.  
+
+### Playlist (shade)
   
 - `pwsnorm`: Playlist window, winshade mode except app-buttons and resize button.  
 - `pwssize`: Playlist window, winshade mode, resize button.  
