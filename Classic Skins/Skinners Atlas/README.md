@@ -286,45 +286,47 @@ Since the width of the letters is not fixed the width of this file can vary depe
 ## GENEX.BMP (112×59)
   
 This file is used to create the buttons and sliders that are used in the general purpose windows, and also contains the colour controls for this window. The buttons are as follows. The top left corner contains the active button, underneath this is the inactive, or pressed state button. These buttons have 4 pixel sized edges that are not stretched (either horizontally or vertically), and the centre is stretched (so be careful with what you paint here). Underneath those are the window scrollers, again both active and inactive states, they are from left to right, top to bottom:  
-Scroll up unpressed  
-Scroll down unpressed  
-Scroll up pressed  
-Scroll down pressed  
-Scroll left unpressed  
-Scroll right unpressed  
-Scroll left pressed  
-Scroll right pressed.  
+
+- Scroll up unpressed  
+- Scroll down unpressed  
+- Scroll up pressed  
+- Scroll down pressed  
+- Scroll left unpressed  
+- Scroll right unpressed  
+- Scroll left pressed  
+- Scroll right pressed.  
   
 Next to these are the scroll bar sliders, these behave in a similar way to the button windows, in so much as they have a 4 pixel border that doesn't stretch, while the rest of the button does (except the central portion). These are from left to right:  
-Scroll slider vertical unpressed  
-Scroll slider vertical pressed  
-Scroll slider horizontal unpressed  
-Scroll slider horizontal pressed  
+
+- Scroll slider vertical unpressed  
+- Scroll slider vertical pressed  
+- Scroll slider horizontal unpressed  
+- Scroll slider horizontal pressed  
   
 The very top row of genex.bmp features a row of pixels that are used to control the various colours and background of the gen window, these pixels start at (48,0) and run as follows:  
   
-(1) x=48: item background (background to edits, listviews, etc.)  
-(2) x=50: item foreground (text colour of edits, listviews, etc.)  
-(3) x=52: window background (used to set the bg color for the dialog)  
-(4) x=54: button text colour  
-(5) x=56: window text colour  
-(6) x=58: colour of dividers and sunken borders  
-(7) x=60: selection colour for entries inside playlists (nothing else yet)  
-(8) x=62: listview header background colour  
-(9) x=64: listview header text colour  
-(10) x=66: listview header frame top and left colour  
-(11) x=68: listview header frame bottom and right colour  
-(12) x=70: listview header frame colour, when pressed  
-(13) x=72: listview header dead area colour  
-(14) x=74: scrollbar colour #1  
-(15) x=76: scrollbar colour #2  
-(16) x=78: pressed scrollbar colour #1  
-(17) x=80: pressed scrollbar colour #2  
-(18) x=82: scrollbar dead area colour  
-(19) x=84 List view text colour highlighted  
-(20) x=86 List view background colour highlighted  
-(21) x=88 List view text colour selected  
-(22) x=90 List view background colour selected  
+1. x=48: item background (background to edits, listviews, etc.)  
+2.  x=50: item foreground (text colour of edits, listviews, etc.)  
+3. x=52: window background (used to set the bg color for the dialog)  
+4. x=54: button text colour  
+5. x=56: window text colour  
+6. x=58: colour of dividers and sunken borders  
+7. x=60: selection colour for entries inside playlists (nothing else yet)  
+8. x=62: listview header background colour  
+9. x=64: listview header text colour  
+10. x=66: listview header frame top and left colour  
+11. x=68: listview header frame bottom and right colour  
+12. x=70: listview header frame colour, when pressed  
+13. x=72: listview header dead area colour  
+14. x=74: scrollbar colour #1  
+15. x=76: scrollbar colour #2  
+16. x=78: pressed scrollbar colour #1  
+17. x=80: pressed scrollbar colour #2  
+18. x=82: scrollbar dead area colour  
+19. x=84 List view text colour highlighted  
+20. x=86 List view background colour highlighted  
+21. x=88 List view text colour selected  
+22. x=90 List view background colour selected  
   
 ## MIKRO.BMP (65×124)
   
@@ -374,34 +376,34 @@ You can get the VidAmp plugin [HERE](http://classic.winamp.com/plugins/detail.jh
 ## CURSORS
 Winamp lets you define custom cursors, which will be used by winamp and only by winamp (when the mouse is over any of winamp's windows, except the minibrowser and avs). If you don't want to make custom cursors, don't include any, winamp will use the default ones. These are the different cursors and where should the mouse be for them to be shown:  
   
-normal.cur: Main window except titlebar, song title, volume, balance and posbar.  
-titlebar.cur: Main window, titlebar except app-buttons.  
-close.cur: Main window, close button.  
-winbut.cur: Main window, winshade button.  
-min.cur: Main window, minimize button.  
-mainmenu.cur: Main window, menu button (top left).  
-volbal.cur: Main window, volume and balance controls.  
-posbar.cur: Main window, posbar.  
-songname.cur: Main window, song title.  
+- `normal.cur`: Main window except titlebar, song title, volume, balance and posbar.  
+- `titlebar.cur`: Main window, titlebar except app-buttons.  
+- `close.cur`: Main window, close button.  
+- `winbut.cur`: Main window, winshade button.  
+- `min.cur`: Main window, minimize button.  
+- `mainmenu.cur`: Main window, menu button (top left).  
+- `volbal.cur`: Main window, volume and balance controls.  
+- `posbar.cur`: Main window, posbar.  
+- `songname.cur`: Main window, song title.  
   
-wsnormal.cur: Main window, winshade mode except appbuttons and posbar.  
-wsposbar.cur: Main window, winshade mode, posbar.  
-mmenu.cur: Main window, winshade mode, menu button (far left).  
+- `wsnormal.cur`: Main window, winshade mode except appbuttons and posbar.  
+- `wsposbar.cur`: Main window, winshade mode, posbar.  
+- `mmenu.cur`: Main window, winshade mode, menu button (far left).  
+
+- `eqnormal.cur`: Equalizer window except titlebar and sliders.  
+- `eqtitle.cur`: Equalizer window, titlebar and winshade mode except close button.  
+- `eqclose.cur`: Equalizer window, close button.  
+- `eqslid.cur`: Equalizer window, sliders.  
   
-eqnormal.cur: Equalizer window except titlebar and sliders.  
-eqtitle.cur: Equalizer window, titlebar and winshade mode except close button.  
-eqclose.cur: Equalizer window, close button.  
-eqslid.cur: Equalizer window, sliders.  
+- `pnormal.cur`: Playlist window except titlebar, resize button and scroll bar.  
+- `ptbar.cur`: Playlist window, titlebar except app-buttons.  
+- `pclose.cur`: Playlist window, close button.  
+- `pwinbut.cur`: Playlist window, winshade button.  
+- `pvscroll.cur`: Playlist window, scroll bar.  
+- `psize.cur`: Playlist window, resize button.  
   
-pnormal.cur: Playlist window except titlebar, resize button and scroll bar.  
-ptbar.cur: Playlist window, titlebar except app-buttons.  
-pclose.cur: Playlist window, close button.  
-pwinbut.cur: Playlist window, winshade button.  
-pvscroll.cur: Playlist window, scroll bar.  
-psize.cur: Playlist window, resize button.  
-  
-pwsnorm: Playlist window, winshade mode except app-buttons and resize button.  
-pwssize: Playlist window, winshade mode, resize button.  
+- `pwsnorm`: Playlist window, winshade mode except app-buttons and resize button.  
+- `pwssize`: Playlist window, winshade mode, resize button.  
   
 Note: The cursors used in the playlist window are used in the minibrowser, video, media library and AVS windows too.  
   
@@ -420,6 +422,7 @@ First of all I want to thank Misha Klement (Cyana) for the excelent [Template Am
 And, of course, all the regulars of the [Skin Love](http://forums.winamp.com/forumdisplay.php?s=&forumid=5) forum and especially: skinme! for his CursorMultiply utility, Kenny D. for the name suggestion, ¤db¤ for his constant support, ideas and criticism (and for amarok and vidamp templates), Mr Jones for his help (actually, he did most of the work) updating to WA2.9... and all the others.  
   
 ## History
+
 1.0.0: First version  
 1.0.1: Added the 'pl-winshade-button' bug in the readme.txt  
 1.0.2: Fixed spelling and typos of readme.txt  
